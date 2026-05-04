@@ -23,6 +23,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "modelosGrandes.h"
 
 // Function prototypes
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -230,9 +231,7 @@ int main()
 	Model Piso((char*)"Models/piso.obj");
 
 
-
-	// First, set the container's VAO (and VBO)
-	// First, set the container's VAO (and VBO)
+	// CUBO NORMAL
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -253,8 +252,7 @@ int main()
 	glEnableVertexAttribArray(2);
 
 
-	// First, set the container's VAO (and VBO) CARA FRENTE TEXTURAS
-	// First, set the container's VAO (and VBO)
+	// CUBO CARA DE FRENTE
 	GLuint VBO_Frente, VAO_Frente;
 	glGenVertexArrays(1, &VAO_Frente);
 	glGenBuffers(1, &VBO_Frente);
@@ -275,6 +273,7 @@ int main()
 	glEnableVertexAttribArray(2);
 
 
+	// CUBO SIN CARA INFERIOR
 	GLuint VBO_SinInferior, VAO_SinInferior;
 	glGenVertexArrays(1, &VAO_SinInferior);
 	glGenBuffers(1, &VBO_SinInferior);
@@ -293,6 +292,52 @@ int main()
 	// Texture attribute (U, V) - Location 2
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(2);
+
+
+	//TUBERIA--------------------------------------------------------------------------
+	GLuint VBO_Tuberia, VAO_Tuberia;
+	glGenVertexArrays(1, &VAO_Tuberia);
+	glGenBuffers(1, &VBO_Tuberia);
+	glBindVertexArray(VAO_Tuberia);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_Tuberia);
+	glBufferData(GL_ARRAY_BUFFER, sizeTuberia, verticesTuberia, GL_STATIC_DRAW);
+
+	// Position attribute (X, Y, Z) - Location 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute (Nx, Ny, Nz) - Location 1
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	// Texture attribute (U, V) - Location 2
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+
+	
+	//Moneda--------------------------------------------------------------------------
+	
+	GLuint VBO_Moneda, VAO_Moneda;
+	glGenVertexArrays(1, &VAO_Moneda);
+	glGenBuffers(1, &VBO_Moneda);
+	glBindVertexArray(VAO_Moneda);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_Moneda);
+	glBufferData(GL_ARRAY_BUFFER, sizeMoneda, verticesMoneda, GL_STATIC_DRAW);
+
+	// Position attribute (X, Y, Z) - Location 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	// Normal attribute (Nx, Ny, Nz) - Location 1
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	// Texture attribute (U, V) - Location 2
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+	
+
+
 
 	// Set texture units
 	lightingShader.Use();
@@ -610,6 +655,65 @@ int main()
 	}
 	stbi_image_free(mangoPole);
 
+	GLuint textureMoneda;
+	glGenTextures(1, &textureMoneda);
+	glBindTexture(GL_TEXTURE_2D, textureMoneda);
+	int textureWidthMon, textureHeightMon, nrChannelsMon;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* imageMoneda;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	// Diffuse map
+	imageMoneda = stbi_load("images/mon.png", &textureWidthMon, &textureHeightMon, &nrChannelsMon, 0);
+	glBindTexture(GL_TEXTURE_2D, textureMoneda);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidthMon, textureHeightMon, 0, GL_RGB, GL_UNSIGNED_BYTE, imageMoneda);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	if (imageMoneda)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidthMon, textureHeightMon, 0, GL_RGB, GL_UNSIGNED_BYTE, imageMoneda);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(imageMoneda);
+
+
+	//Carga de textura para tuberia
+	GLuint textureTuber;
+	glGenTextures(1, &textureTuber);
+	glBindTexture(GL_TEXTURE_2D, textureTuber);
+	int textureWidthTube, textureHeightTube, nrChannelsTube;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* imageTuberia;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	// Diffuse map
+	imageTuberia = stbi_load("images/tuberiaT.png", &textureWidthTube, &textureHeightTube, &nrChannelsTube, 0);
+	glBindTexture(GL_TEXTURE_2D, textureTuber);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidthTube, textureHeightTube, 0, GL_RGB, GL_UNSIGNED_BYTE, imageTuberia);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	if (imageTuberia)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidthTube, textureHeightTube, 0, GL_RGB, GL_UNSIGNED_BYTE, imageTuberia);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(imageTuberia);
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -710,6 +814,11 @@ int main()
 
 		// Set material properties
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 16.0f);
+		
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.5f, 0.5f, 0.5f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.5f, 0.5f, 0.5f); //canal de colores, primeros dos hace verdoso
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.0f, 0.0f, 0.0f);
+		//glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 0.0f);
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -1133,89 +1242,92 @@ int main()
 		//-----------------------------------------------------------------------------------DIBUJADO DE POLE
 		//Base CUBO 
 
-		//MODELADO BASE CUBO USED SUPER MARIO
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.651369f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//-----------------------------------------------------------------------------------
+		// DIBUJADO DE POLE (MODELADO JERÁRQUICO)
+		//-----------------------------------------------------------------------------------
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureCubeUsed);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
+		// 1. PADRE ABSOLUTO: MANGO DEL POLE
+		glm::mat4 modelPole = glm::mat4(1.0f);
+		modelPole = glm::translate(modelPole, glm::vec3(0.0f, 5.87413f, -4.0f));
 
+		// Activamos el VAO general para todo el Pole
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
 
-		//MODELADO BASE INFERIOR DEL POLE 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 1.85964f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.654f, 0.219f, 0.654f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureBaseInfPole);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
-
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-
-		//MODELADO BASE INTERIOR DEL POLE 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 2.22325f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.412f, 0.138f, 0.412f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureBaseIntPole);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
-
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-
-		//MODELADO MANGO DEL POLE
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 5.87413f, 0.0f));
+		// Dibujamos el Mango (Padre) aplicando su escala
+		model = modelPole;
 		model = glm::scale(model, glm::vec3(0.260f, 3.500f, 0.260f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureMangoPole);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
-
-		glBindVertexArray(VAO);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
 
+		// =========================================================================
+		// HIJOS DEL MANGO
+		// =========================================================================
 
-		//MODELADO BASE INTERIOR SUPERIOR DEL POLE 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 9.42932f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.412f, 0.138f, 0.412f));
+		// MODELADO BASE CUBO USED SUPER MARIO 
+		// Y relativo: 0.651369 - 5.87413 = -5.222761
+		model = modelPole;
+		model = glm::translate(model, glm::vec3(0.0f, -5.222761f, 0.0f));
+		// Sin escala en el original
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureBaseIntPole);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
-
-		glBindVertexArray(VAO);
+		glBindTexture(GL_TEXTURE_2D, textureCubeUsed);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
 
-
-		//MODELADO BASE INFERIOR SUPERIOR DEL POLE 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 9.79746f, 0.0f));
+		// MODELADO BASE INFERIOR DEL POLE 
+		// Y relativo: 1.85964 - 5.87413 = -4.01449
+		model = modelPole;
+		model = glm::translate(model, glm::vec3(0.0f, -4.01449f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.654f, 0.219f, 0.654f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureBaseInfPole);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
-
-		glBindVertexArray(VAO);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// MODELADO BASE INTERIOR DEL POLE 
+		// Y relativo: 2.22325 - 5.87413 = -3.65088
+		model = modelPole;
+		model = glm::translate(model, glm::vec3(0.0f, -3.65088f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.412f, 0.138f, 0.412f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureBaseIntPole);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// MODELADO BASE INTERIOR SUPERIOR DEL POLE 
+		// Y relativo: 9.42932 - 5.87413 = 3.55519
+		model = modelPole;
+		model = glm::translate(model, glm::vec3(0.0f, 3.55519f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.412f, 0.138f, 0.412f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureBaseIntPole);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// MODELADO BASE INFERIOR SUPERIOR DEL POLE 
+		// Y relativo: 9.79746 - 5.87413 = 3.92333
+		model = modelPole;
+		model = glm::translate(model, glm::vec3(0.0f, 3.92333f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.654f, 0.219f, 0.654f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureBaseInfPole);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Desvinculamos el VAO al terminar de dibujar el Pole
 		glBindVertexArray(0);
 
 
@@ -1238,17 +1350,48 @@ int main()
 
 
 		
+		//-----------------------------------------------------------------------------------DIBUJADO DE TUBERIA
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.7f, 4.0f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureTuber);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); // Asegura que el shader lea la textura 0
+
+		glBindVertexArray(VAO_Tuberia);
+		glDrawArrays(GL_TRIANGLES, 0, 2292);
+		glBindVertexArray(0);
 
 
+		//-----------------------------------------------------------------------------------DIBUJADO DE Moneda
 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.8f, 0.0f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureMoneda);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); 
 
+		/*glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 64.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.8f, 0.8);*/
 
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.0f, 0.0f, 0.0f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.0f, 0.0f, 0.0f); //canal de colores, primeros dos hace verdoso
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.0f, 0.0f, 0.0f);
+		//glUniform1f(glGetUniformLocation(lightingShader.Program, "material_shininess"), 0.0f);
 
-
-
-
+		glBindVertexArray(VAO_Moneda);
+		glDrawArrays(GL_TRIANGLES, 0, 3924);
+		glBindVertexArray(0);
 		
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
 		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
