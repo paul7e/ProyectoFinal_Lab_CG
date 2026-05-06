@@ -154,7 +154,7 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="fuentesDeLuzModelosIntegrados.cpp" />
+    <ClCompile Include="animacionEscenario.cpp" />
     <ClCompile Include="modelosGrandes.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

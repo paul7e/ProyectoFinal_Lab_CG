@@ -6229,6 +6229,7 @@ float verticesMoneda[] = {
 
 
 
+
  //Se calcula el tamaño real aquí y se asigna a las constantes
 const int sizeTuberia = sizeof(verticesTuberia);
 const int sizeMoneda = sizeof(verticesMoneda);
