@@ -288,7 +288,7 @@ int main()
 	Model Ball((char*)"Models/ball.obj");
 
 	//Model Dog((char*)"Models/Mario.obj");
-	Model Escenario((char*)"Models/esc.obj");
+	Model Escenario((char*)"Models/escMod.obj");
 
 
 	// CUBO NORMAL FUENTES DE LUZ
@@ -829,11 +829,22 @@ int main()
 		glUniform3f(viewPosLoc, camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 
 
-		// Directional light
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.2f, 0.2f, 0.2f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.2f, 0.2f, 0.2f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.2f, 0.2f, 0.2f);
+		//// Directional light
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -71.9288, 2.21836, 3.17808);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.1f, 0.1f, 0.1f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.1f, 0.1f, 0.1f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.1f, 0.1f, 0.1f);
+
+		// Directional light corregida
+		// X = 0.0f (Sin inclinación lateral)
+		// Y = -1.0f (Apuntando hacia abajo)
+		// Z = -1.0f (Apuntando hacia el fondo de la pantalla, es decir, de frente a los objetos)
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), 0.0f, -1.0f, 1.0f);
+
+		// Intensidades
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 1.0f, 0.802f, 0.088f); // Luz base
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 1.0f, 0.802f, 0.088f); // Luz principal brillante
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.5f, 0.5f, 0.5f); // Brillos
 
 
 		// Point light 1
@@ -900,7 +911,7 @@ int main()
 
 		model = glm::mat4(1.0f);
 		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Escenario.Draw(lightingShader);
 
@@ -957,7 +968,8 @@ int main()
 		
 		// 1. PADRE ABSOLUTO: CUBO SIN CARA INFERIOR
 		glm::mat4 modelCaja = glm::mat4(1.0f);
-		modelCaja = glm::translate(modelCaja, glm::vec3(8.0f, 0.620774f, 0.0f));
+		modelCaja = glm::translate(modelCaja, glm::vec3(10.2351f, 7.08976f, 28.2975f));
+		modelCaja = glm::rotate(modelCaja, 3.14159f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Dibujamos la caja aplicando su escala final
 		model = modelCaja;
@@ -1080,7 +1092,8 @@ int main()
 
 		// 1. PADRE ABSOLUTO: BASE SUPERIOR
 		glm::mat4 modelPlataforma = glm::mat4(1.0f);
-		modelPlataforma = glm::translate(modelPlataforma, glm::vec3(0.560211f, 41.4689f, 56.9988f));
+		modelPlataforma = glm::translate(modelPlataforma, glm::vec3(-3.01135f, 26.676f, 36.63f));
+		modelPlataforma = glm::scale(modelPlataforma, glm::vec3(0.7f, 0.7f, 0.7f));
 		model = glm::scale(model, glm::vec3(4.20231f, 0.196867f, 4.20231f));
 
 		// Activamos la textura y el VAO una sola vez para toda la plataforma
@@ -1246,7 +1259,10 @@ int main()
 		//DEFINICION DEL PADRE (EL MANGO)
 
 		glm::mat4 modelMango = glm::mat4(1.0f);
-		modelMango = glm::translate(modelMango, glm::vec3(-8.0f, 1.93339f, 0.0f));
+		modelMango = glm::translate(modelMango, glm::vec3(0.0f, 2.91483f, 13.998f));
+		modelMango = glm::rotate(modelMango, 3.141598f, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelMango = glm::scale(modelMango, glm::vec3(0.8030f, 0.8030f, 0.8030f));
+
 		model = modelMango;
 		model = glm::scale(model, glm::vec3(0.198f, -1.407f, 0.199f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -1342,11 +1358,12 @@ int main()
 
 		// 1. PADRE ABSOLUTO: MANGO DEL POLE
 		glm::mat4 modelPole = glm::mat4(1.0f);
-		modelPole = glm::translate(modelPole, glm::vec3(0.0f, 5.87413f, -4.0f));
+		modelPole = glm::translate(modelPole, glm::vec3(-6.2866f, 11.8751f, 35.9193f));
+		modelPole = glm::scale(modelPole, glm::vec3(0.8025f, 0.8025f, 0.8025f));
 
 		// Activamos el VAO general para todo el Pole
 		glBindVertexArray(VAO);
-
+		
 		// Dibujamos el Mango (Padre) aplicando su escala
 		model = modelPole;
 		model = glm::scale(model, glm::vec3(0.260f, 3.500f, 0.260f));
@@ -1430,7 +1447,8 @@ int main()
 
 		//MODELADO BASE CUBO USED SUPER MARIO
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-4.0f, 4.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(8.43391f, 11.213f, 31.1363f));
+		model = glm::scale(model, glm::vec3(0.7688621f, 0.768862f, 0.768862f));
 		model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
@@ -1447,8 +1465,8 @@ int main()
 		//-----------------------------------------------------------------------------------DIBUJADO DE TUBERIA
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 3.54892f, 2.21795f));
-		model = glm::scale(model, glm::vec3(1.67002f, 1.67002f, 1.67002f));
+		model = glm::translate(model, glm::vec3(0.0f, 2.09684f, 3.69183f));
+		//model = glm::scale(model, glm::vec3(1.67002f, 1.67002f, 1.67002f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
@@ -1463,7 +1481,8 @@ int main()
 		//-----------------------------------------------------------------------------------DIBUJADO DE Moneda
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.8f, 0.0f));
+		model = glm::translate(model, glm::vec3(11.3432f, 14.4035f, 33.0905f));
+		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
 		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
@@ -1484,6 +1503,50 @@ int main()
 		glBindVertexArray(0);
 		
 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(9.85912f, 14.4035f, 33.0905f));
+		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureMoneda);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+
+		/*glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 64.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.8f, 0.8);*/
+
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.0f, 0.0f, 0.0f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.0f, 0.0f, 0.0f); //canal de colores, primeros dos hace verdoso
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.0f, 0.0f, 0.0f);
+		//glUniform1f(glGetUniformLocation(lightingShader.Program, "material_shininess"), 0.0f);
+
+		glBindVertexArray(VAO_Moneda);
+		glDrawArrays(GL_TRIANGLES, 0, 3924);
+		glBindVertexArray(0);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(8.40302f, 14.4035f, 33.0905f));
+		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureMoneda);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+
+		/*glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 64.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.8f, 0.8);*/
+
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.0f, 0.0f, 0.0f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.0f, 0.0f, 0.0f); //canal de colores, primeros dos hace verdoso
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.0f, 0.0f, 0.0f);
+		//glUniform1f(glGetUniformLocation(lightingShader.Program, "material_shininess"), 0.0f);
+
+		glBindVertexArray(VAO_Moneda);
+		glDrawArrays(GL_TRIANGLES, 0, 3924);
+		glBindVertexArray(0);
 		////////////////////////////////////////////////////////////////////////////////////////// PARTE DE FUENTES DE LUZ
 
 		// Also draw the lamp object, again binding the appropriate shader
@@ -1529,31 +1592,32 @@ int main()
 // Moves/alters the camera positions based on user input
 void DoMovement()
 {
+	float moreSpeedCamera = 2.0f;
 
 	// Camera controls
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
-		camera.ProcessKeyboard(FORWARD, deltaTime);
+		camera.ProcessKeyboard(FORWARD, deltaTime * moreSpeedCamera);
 
 	}
 
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
 	{
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		camera.ProcessKeyboard(BACKWARD, deltaTime * moreSpeedCamera);
 
 
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		camera.ProcessKeyboard(LEFT, deltaTime * moreSpeedCamera);
 
 
 	}
 
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+		camera.ProcessKeyboard(RIGHT, deltaTime * moreSpeedCamera);
 
 
 	}
