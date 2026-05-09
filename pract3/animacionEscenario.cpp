@@ -217,6 +217,7 @@ float verticesCajaVolad[] = {
 };
 
 glm::vec3 Light1 = glm::vec3(0);
+
 //Anim
 float rotBall = 0.0f;
 bool AnimBall = false;
@@ -230,6 +231,36 @@ float tail = 0.0f;
 glm::vec3 dogPos(0.0f, 0.0f, 0.0f);
 float dogRot = 0.0f;
 bool step = false;
+
+/////////////////////////////////Animations
+
+//Anim Moneda
+bool AnimMoneda = false;
+float rotMoneda = 0.0f;
+
+// Animación Plataforma
+bool AnimPlataforma = false;
+float platPos = 18.728f; // Limite inferior
+bool platSube = true; 
+
+// Animación Bandera (Viento)
+bool AnimBandera = false;
+float tiempoViento = 0.0f;
+
+// Animación Koopa Shell
+bool AnimShell = false;
+float shellX = 9.72329f; // Posición inicial
+float shellRot = 0.0f;   // Ángulo de rotacion
+bool shellAvanza = true; // Controla si va hacia la izquierda o derecha
+
+// Animación Cajita Voladora (Maquina de Estados)
+bool AnimCaja = false;
+float cajaPosX = 10.048f, cajaPosY = 10.8093f, cajaPosZ = 6.78313f; // Posicion 1
+float cajaRotY = 0.0f;   // Controla hacia donde voltea
+float cajaInclin = 0.0f;  // Controla la inclinacion hacia adelante
+float heliceRot = 0.0f;  // Rotacion de las helices
+float tiempoVuelo = 0.0f;
+int estadoCaja = 0;      // Define que lado del cuadro esta recorriendo
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -289,6 +320,7 @@ int main()
 
 	//Model Dog((char*)"Models/Mario.obj");
 	Model Escenario((char*)"Models/escMod.obj");
+	Model shell((char*)"Models/shell.obj");
 
 
 	// CUBO NORMAL FUENTES DE LUZ
@@ -915,6 +947,14 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Escenario.Draw(lightingShader);
 
+		//CARGA DE SHELL DE KOOPA
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(shellX, 1.5481f, 20.6984f));
+		model = glm::rotate(model, glm::radians(shellRot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		shell.Draw(lightingShader);
+
 
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -967,10 +1007,23 @@ int main()
 		//MODELADO BASE CUBO SIN CARA INFERIOR PADRE DE LA JERARQUIA DE LA CAJITA VOLADORA
 		
 		// 1. PADRE ABSOLUTO: CUBO SIN CARA INFERIOR
-		glm::mat4 modelCaja = glm::mat4(1.0f);
-		modelCaja = glm::translate(modelCaja, glm::vec3(10.2351f, 7.08976f, 28.2975f));
-		modelCaja = glm::rotate(modelCaja, 3.14159f, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glm::mat4 modelCaja = glm::mat4(1.0f);
+		//modelCaja = glm::translate(modelCaja, glm::vec3(10.048f, 10.8093f, 6.78313));
+		////modelCaja = glm::rotate(modelCaja, 3.14159f, glm::vec3(0.0f, 1.0f, 0.0f));
 
+		glm::mat4 modelCaja = glm::mat4(1.0f);
+
+		// Aplicamos la posición dinámica (X, Y flotante, Z)
+		modelCaja = glm::translate(modelCaja, glm::vec3(cajaPosX, cajaPosY, cajaPosZ));
+
+		// Aplicamos la rotación direccional (Yaw)
+		modelCaja = glm::rotate(modelCaja, glm::radians(cajaRotY), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		// Aplicamos la inclinación de avance (Pitch) en su eje X local
+		modelCaja = glm::rotate(modelCaja, glm::radians(cajaInclin), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		
+		
 		// Dibujamos la caja aplicando su escala final
 		model = modelCaja;
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -1050,6 +1103,10 @@ int main()
 		glm::mat4 modelHelice = modelBaseSup; // Creamos la matriz pivote
 		modelHelice = glm::translate(modelHelice, glm::vec3(0.0f, -0.007f, 0.0f));
 
+
+		modelHelice = glm::rotate(modelHelice, glm::radians(heliceRot), glm::vec3(0.0f, 1.0f, 0.0f));
+
+
 		model = modelHelice;
 		model = glm::scale(model, glm::vec3(1.428f, 0.057f, 0.251f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -1092,7 +1149,7 @@ int main()
 
 		// 1. PADRE ABSOLUTO: BASE SUPERIOR
 		glm::mat4 modelPlataforma = glm::mat4(1.0f);
-		modelPlataforma = glm::translate(modelPlataforma, glm::vec3(-3.01135f, 26.676f, 36.63f));
+		modelPlataforma = glm::translate(modelPlataforma, glm::vec3(-3.01135f, platPos, 36.63f));
 		modelPlataforma = glm::scale(modelPlataforma, glm::vec3(0.7f, 0.7f, 0.7f));
 		model = glm::scale(model, glm::vec3(4.20231f, 0.196867f, 4.20231f));
 
@@ -1297,8 +1354,20 @@ int main()
 		// Traslación relativa X: 1.19395 - 0.0 = 1.19395
 		// Traslación relativa Y: 2.27488 - 1.93339 = 0.34149
 		model = glm::translate(model, glm::vec3(1.19395f, 0.34149f, 0.0f));
-		model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f));
-		// Ojo: Las rotaciones locales del hijo van después de ubicarlo
+		model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f)); // Su rotación original
+		
+
+		//Parte animacion de ondeo de bandera (manipulacion de 3 ejes)
+		// Solo se mueven si tiempoViento avanza. Usamos sin() y cos() para crear vaivenes.
+		float fuerzaX = sin(tiempoViento * 1.5f) * 8.0f;  // Aleteo vertical
+		float fuerzaY = sin(tiempoViento * 2.0f) * 15.0f; // Tirones hacia los lados (el más fuerte)
+		float fuerzaZ = cos(tiempoViento * 1.1f) * 5.0f;  // Ligera torsión
+
+		model = glm::rotate(model, glm::radians(fuerzaX), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(fuerzaY), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(fuerzaZ), glm::vec3(0.0f, 1.0f, 0.0f));
+
+
 		model = glm::scale(model, glm::vec3(0.010f, 0.847f, -1.007));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
@@ -1483,15 +1552,15 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(11.3432f, 14.4035f, 33.0905f));
 		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
-		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotMoneda), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureMoneda);
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0); 
 
-		/*glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 64.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.8f, 0.8);*/
+		//glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 64.0f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 0.8f, 0.8f, 0.8);*/
 
 		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.ambient"), 0.0f, 0.0f, 0.0f);
 		//glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.0f, 0.0f, 0.0f); //canal de colores, primeros dos hace verdoso
@@ -1506,7 +1575,8 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(9.85912f, 14.4035f, 33.0905f));
 		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
-		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotMoneda), glm::vec3(0.0f, 1.0f, 0.0f));
+
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
@@ -1529,7 +1599,8 @@ int main()
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(8.40302f, 14.4035f, 33.0905f));
 		model = glm::scale(model, glm::vec3(0.6364f, 0.6364f, 0.6364f));
-		//model = glm::rotate(model, -1.5708f, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotMoneda), glm::vec3(0.0f, 1.0f, 0.0f));
+
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glActiveTexture(GL_TEXTURE0);
@@ -1547,6 +1618,38 @@ int main()
 		glBindVertexArray(VAO_Moneda);
 		glDrawArrays(GL_TRIANGLES, 0, 3924);
 		glBindVertexArray(0);
+
+
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(11.2644f, 1.78688f, 20.7837f));
+		model = glm::scale(model, glm::vec3(0.768862f, 0.768862f, 0.768862f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureCubeUsed);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-3.26968f, 1.78688f, 20.7837f));
+		model = glm::scale(model, glm::vec3(0.768862f, 0.768862f, 0.768862f));
+		//model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureCubeUsed);
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "texture_diffuse"), 0);
+		
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
 		////////////////////////////////////////////////////////////////////////////////////////// PARTE DE FUENTES DE LUZ
 
 		// Also draw the lamp object, again binding the appropriate shader
@@ -1692,8 +1795,32 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
 	if (keys[GLFW_KEY_P])
 	{
-		dogAnim = 1;
+		AnimPlataforma = !AnimPlataforma; 
+		keys[GLFW_KEY_P] = false;         
+	}
 
+	if (keys[GLFW_KEY_C])
+	{
+		AnimMoneda = !AnimMoneda;
+		keys[GLFW_KEY_C] = false; 
+	}
+
+	if (keys[GLFW_KEY_B])
+	{
+		AnimBandera = !AnimBandera;
+		keys[GLFW_KEY_B] = false;
+	}
+
+	if (keys[GLFW_KEY_K])
+	{
+		AnimShell = !AnimShell;
+		keys[GLFW_KEY_K] = false; // Evita el parpadeo de la animación
+	}
+
+	if (keys[GLFW_KEY_V])
+	{
+		AnimCaja = !AnimCaja;
+		keys[GLFW_KEY_V] = false;
 	}
 
 }
@@ -1704,35 +1831,197 @@ void Animation() {
 		//printf("%f", rotBall);
 	}
 
-	if (AnimDog)
+	//if (AnimDog)
+	//{
+	//	rotDog -= 0.6f;
+	//	//printf("%f", rotBall);
+	//}
+
+	//if (dogAnim == 1) {       //Walk Animation
+	//	if (!step) {          //State 1
+	//		RLegs += 0.3f;
+	//		FLegs += 0.3f;
+	//		head += 0.3f;
+	//		tail += 0.3f;
+
+	//		if (RLegs > 15.0f) //Condition
+	//			step = true;
+	//	}
+	//	else
+	//	{
+	//		RLegs -= 0.3f;
+	//		FLegs -= 0.3f;
+	//		head -= 0.3f;
+	//		tail -= 0.3f;
+
+	//		if (RLegs < -15.0f) //Condition
+	//			step = false;
+
+	//	}
+
+	//	dogPos.z += 0.001;
+	//}
+
+	if (AnimMoneda)
 	{
-		rotDog -= 0.6f;
-		//printf("%f", rotBall);
+		rotMoneda += 1.2f; // Velocidad de rotación de la moneda
+		if (rotMoneda >= 360.0f) {
+			rotMoneda -= 360.0f; // Mantiene el angulo en un rango manejable
+		}
 	}
 
-	if (dogAnim == 1) {       //Walk Animation
-		if (!step) {          //State 1
-			RLegs += 0.3f;
-			FLegs += 0.3f;
-			head += 0.3f;
-			tail += 0.3f;
+	// Animación de la plataforma 
+	if (AnimPlataforma) {
+		float velocPlat = 0.02f;
 
-			if (RLegs > 15.0f) //Condition
-				step = true;
+		if (platSube) {
+			platPos += velocPlat;
+			if (platPos >= 26.7383f) {
+				platPos = 26.7383f;
+				platSube = false;
+			}
 		}
-		else
-		{
-			RLegs -= 0.3f;
-			FLegs -= 0.3f;
-			head -= 0.3f;
-			tail -= 0.3f;
+		else {
+			platPos -= velocPlat;
+			if (platPos <= 18.728f) {
+				platPos = 18.728f;
+				platSube = true;
+			}
+		}
+	}
 
-			if (RLegs < -15.0f) //Condition
-				step = false;
+	if (AnimBandera) {
+		// Incrementamos sel tiempo, multiplicacion por deltaTime asegura 
+		// que el viento sople igual sin importar los frames del equipo
 
+		tiempoViento += deltaTime * 5.0f; // Velocidad del viento, ajustable
+	}
+
+	if (AnimShell) {
+		
+		//Rotación constante su propie eje
+		shellRot += 15.0f; // Velocidad de rotacion
+		if (shellRot >= 360.0f) {
+			shellRot -= 360.0f; // Mantiene el angulo en un rango manejable
 		}
 
-		dogPos.z += 0.001;
+		// Traslacion de lado a lado
+		float velocShell = 0.1f; // Velocidad de movimiento, ajustable
+
+		if (shellAvanza) {
+			shellX -= velocShell; // Se dirige hacia -1.68063 (derecha, empieza en 9 en x)
+			if (shellX <= -1.68063f) {
+				shellX = -1.68063f; // Limite derecho
+				shellAvanza = false; // Cambiamos de dirección
+			}
+		}
+		else {
+			shellX += velocShell; // Regresa hacia 9 (izquierda)
+			if (shellX >= 9.72329f) {
+				shellX = 9.72329f; // Limite izquierdo
+				shellAvanza = true; // Cambiamos de direccion
+			}
+		}
+	}
+
+
+	// Animación Cajita Voladora
+	if (AnimCaja) {
+		
+		tiempoVuelo += deltaTime * 2.0f;
+
+		// Las helices giran constantemente sin importar el estado
+		
+		heliceRot += 25.0f;
+
+		if (heliceRot >= 360.0f) {
+			
+			heliceRot -= 360.0f;
+		} 
+
+		// Efecto de flotacion constante en el eje y o z para simular vuelo
+		cajaPosY = 10.8093f + sin(tiempoVuelo) * 0.4f;
+
+		// Velocidades ajustables
+		float velCaja = 0.08f;
+		float velRot = 2.5f;
+
+		// Maquina de estados cajita
+
+		switch (estadoCaja) {
+		
+		case 0: // Avanzar de Posicion 1 a 2 (+Z)
+			cajaInclin = 15.0f; // Se inclina para avanzar
+			cajaPosZ += velCaja;
+			if (cajaPosZ >= 27.3541f) {
+				cajaPosZ = 27.3541f; // Asegura limite
+				cajaInclin = 0.0f;    // Se endereza
+				estadoCaja = 1;      // Pasa a estado de giro
+			}
+			break;
+
+		case 1: // Rotar a la derecha (-90 grados en Y)
+			cajaRotY -= velRot;
+			if (cajaRotY <= -90.0f) {
+				cajaRotY = -90.0f;
+				estadoCaja = 2; // Pasa a estado de avance
+			}
+			break;
+
+		case 2: // Avanzar de Posicion 2 a 3 (-X)
+			cajaInclin = 15.0f;
+			cajaPosX -= velCaja;
+			if (cajaPosX <= -13.6973f) {
+				cajaPosX = -13.6973f;
+				cajaInclin = 0.0f;
+				estadoCaja = 3;
+			}
+			break;
+
+		case 3: // Rotar a la derecha (-180 grados en Y)
+			cajaRotY -= velRot;
+			if (cajaRotY <= -180.0f) {
+				cajaRotY = -180.0f;
+				estadoCaja = 4;
+			}
+			break;
+
+		case 4: // Avanzar de Posicion 3 a 4 (-Z)
+			cajaInclin = 15.0f;
+			cajaPosZ -= velCaja;
+			if (cajaPosZ <= 6.78313f) {
+				cajaPosZ = 6.78313f;
+				cajaInclin = 0.0f;
+				estadoCaja = 5;
+			}
+			break;
+
+		case 5: // Rotar a la derecha (-270 grados en Y)
+			cajaRotY -= velRot;
+			if (cajaRotY <= -270.0f) {
+				cajaRotY = -270.0f;
+				estadoCaja = 6;
+			}
+			break;
+
+		case 6: // Avanzar de Posicion 4 a 1 (+X)
+			cajaInclin = 15.0f;
+			cajaPosX += velCaja;
+			if (cajaPosX >= 10.048f) {
+				cajaPosX = 10.048f;
+				cajaInclin = 0.0f;
+				estadoCaja = 7;
+			}
+			break;
+
+		case 7: // Rotar a la derecha (-360 grados) y reiniciar
+			cajaRotY -= velRot;
+			if (cajaRotY <= -360.0f) {
+				cajaRotY = 0.0f; // Reinicia el contador de ángulos
+				estadoCaja = 0;  // Vuelve al primer estado
+			}
+			break;
+		}
 	}
 
 }
