@@ -1,0 +1,26 @@
+# Blender 5.0.1 MTL File: 'escenarioLab.blend'
+# www.blender.org
+
+newmtl 02_-_Default.001
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.035294 0.011765 0.007843
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka intCube.png
+map_Kd intCube.png
+
+newmtl 03_-_Default
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.376471 0.078431 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka extCubo.png
+map_Kd extCubo.png
