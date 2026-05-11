@@ -1,0 +1,58 @@
+# Blender 5.0.1 MTL File: 'escenarioLab.blend'
+# www.blender.org
+
+newmtl Brick
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Ka Goal Brick_defaultMat_BaseColor.png
+map_Kd Goal Brick_defaultMat_BaseColor.png
+
+newmtl Flag
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Ka Flag texture.png
+map_Kd Flag texture.png
+
+newmtl Material.011
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.321207 0.206135 0.150551
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Ka intGoal.png
+map_Kd intGoal.png
+
+newmtl Pipe
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Ka textBlanca.png
+map_Kd textBlanca.png
+
+newmtl Yellow_ball
+Ns 834.731384
+Ka 1.000000 1.000000 1.000000
+Kd 0.800323 0.662213 0.029630
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Ka textBaseFlag.png
+map_Kd textBaseFlag.png

@@ -1,0 +1,24 @@
+﻿  main_Proyecto.cpp
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(819,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(863,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(863,21): warning C4244:         with
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(863,21): warning C4244:         [
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(863,21): warning C4244:             T=float
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(863,21): warning C4244:         ]
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(864,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(864,21): warning C4244:         with
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(864,21): warning C4244:         [
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(864,21): warning C4244:             T=float
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(864,21): warning C4244:         ]
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(865,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(865,21): warning C4244:         with
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(865,21): warning C4244:         [
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(865,21): warning C4244:             T=float
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(865,21): warning C4244:         ]
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1896,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1897,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1901,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1902,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1904,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\ProyectoFinal_CG\main_Proyecto.cpp(1905,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  ProyectoFinal_CG.vcxproj -> C:\Users\paulm\OneDrive\Escritorio\ProyectoFinal\escenarioSuperMario\Debug\ProyectoFinal_CG.exe

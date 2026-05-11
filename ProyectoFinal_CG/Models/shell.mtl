@@ -1,0 +1,63 @@
+# Blender 5.0.1 MTL File: 'escenarioLab.blend'
+# www.blender.org
+
+newmtl 02_-_Default
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.803922 0.737255 0.525490
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka base.png
+map_Kd base.png
+
+newmtl contorno
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka textContBlanco.png
+map_Kd textContBlanco.png
+
+
+newmtl cosaRoja
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka textRojo.png
+map_Kd textRojo.png
+
+newmtl dentro
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka textNegro.png
+map_Kd textNegro.png
+
+newmtl sombra
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.125490 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka textSombra.png
+map_Kd textSombra.png
