@@ -1,0 +1,22 @@
+# Blender 5.0.1 MTL File: 'escenarioLab.blend'
+# www.blender.org
+
+newmtl Wood_mat
+Ns 16.000021
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Ka 0.png
+map_Kd 0.png
+
+newmtl lawn_mat
+Ns 16.000021
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Ka 1.png
+map_Kd 1.png

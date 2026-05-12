@@ -260,8 +260,14 @@ int main()
 {
 	glfwInit();
 
-	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Pruebas Finales", nullptr, nullptr);
+	// Create a GLFWwindow object that we can use for GLFW's functions TAMAÑO DE VENTANA DE ACUERDO A PANTALLA
+	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Pruebas Finales", primaryMonitor, nullptr);
+
+	/*GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height - 60, "Pruebas Finales", nullptr, nullptr);*/
 
 	if (nullptr == window)
 	{
@@ -1275,7 +1281,7 @@ int main()
 		model = glm::rotate(model, -1.5708f, glm::vec3(0.0f, 1.0f, 0.0f)); 
 		
 		//Parte animacion de ondeo de bandera (manipulacion de 3 ejes)
-		// Solo se mueven si tiempoViento avanza. Usamos sin() y cos() para crear turbulencia
+		// Solo se mueven si tiempoViento avanza. Uso de sin() y cos() para crear turbulencia
 		float fuerzaX = sin(tiempoViento * 1.5f) * 8.0f;  // Aleteo vertical
 		float fuerzaY = sin(tiempoViento * 2.0f) * 15.0f; // Tirones hacia los lados (mas fuerte)
 		float fuerzaZ = cos(tiempoViento * 1.1f) * 5.0f;  // Ligera torsion
@@ -1678,19 +1684,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		}
 	}
 
-	if (keys[GLFW_KEY_SPACE])
-	{
-		active = !active;
-		if (active)
-		{
-			Light1 = glm::vec3(0.2f, 0.8f, 1.0f);
-
-		}
-		else
-		{
-			Light1 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
-		}
-	}
 
 	if (keys[GLFW_KEY_P])
 	{
@@ -1727,7 +1720,8 @@ void Animation() {
 
 	if (AnimMoneda)
 	{
-		rotMoneda += 1.2f; // Velocidad de rotacion de la moneda
+		//rotMoneda += 1.2f; // Velocidad de rotacion de la moneda
+		rotMoneda += 85.0f * deltaTime;
 		if (rotMoneda >= 360.0f) {
 			rotMoneda -= 360.0f; // Mantiene el angulo en un rango manejable
 		}
@@ -1735,7 +1729,7 @@ void Animation() {
 
 	// Animacion de la plataforma 
 	if (AnimPlataforma) {
-		float velocPlat = 0.02f;
+		float velocPlat = 1.8f * deltaTime;
 
 		if (platSube) {
 			platPos += velocPlat;
@@ -1763,13 +1757,13 @@ void Animation() {
 	if (AnimShell) {
 		
 		//Rotacion constante su propie eje
-		shellRot += 15.0f; // Velocidad de rotacion
+		shellRot += 900.0f * deltaTime; // Velocidad de rotacion
 		if (shellRot >= 360.0f) {
 			shellRot -= 360.0f; // Mantiene el angulo en un rango manejable
 		}
 
 		// Traslacion de lado a lado
-		float velocShell = 0.1f; // Velocidad de movimiento, ajustable
+		float velocShell = 6.0f * deltaTime; // Velocidad de movimiento, ajustable
 
 		if (shellAvanza) {
 			shellX -= velocShell; // Se dirige hacia -1.68063 (derecha, empieza en 9 en x)
@@ -1795,7 +1789,7 @@ void Animation() {
 
 		// Las helices giran constantemente sin importar el estado
 		
-		heliceRot += 25.0f;
+		heliceRot += 1500.0f * deltaTime;
 
 		if (heliceRot >= 360.0f) {
 			
@@ -1806,8 +1800,8 @@ void Animation() {
 		cajaPosY = 10.8093f + sin(tiempoVuelo) * 0.4f;
 
 		// Velocidades ajustables
-		float velCaja = 0.08f;
-		float velRot = 2.5f;
+		float velCaja = 4.8f * deltaTime;
+		float velRot = 150.0f * deltaTime;
 
 		// Maquina de estados cajita
 

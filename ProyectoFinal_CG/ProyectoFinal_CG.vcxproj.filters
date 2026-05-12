@@ -55,10 +55,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main_Proyecto.cpp">
+    <ClCompile Include="modelosGrandes.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="modelosGrandes.cpp">
+    <ClCompile Include="main_Proyecto.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

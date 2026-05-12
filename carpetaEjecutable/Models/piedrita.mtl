@@ -1,0 +1,50 @@
+# Blender 5.0.1 MTL File: 'escenarioLab.blend'
+# www.blender.org
+
+newmtl caraAtras
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.431373 0.482353 0.466667
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka caraAtas.png
+map_Kd caraAtas.png
+
+
+newmtl caraFrente
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 1
+map_Ka Thwomp.png
+map_Kd Thwomp.png
+
+newmtl cont
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.105882 0.137255 0.141176
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Ka cont.png
+map_Kd cont.png
+
+newmtl pinch
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 0.447059 0.447059 0.447059
+Ks 0.320000 0.320000 0.320000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Ka pinch.png
+map_Kd pinch.png
+
