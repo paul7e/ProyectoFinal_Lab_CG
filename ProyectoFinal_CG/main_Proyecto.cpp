@@ -260,14 +260,14 @@ int main()
 {
 	glfwInit();
 
-	// Create a GLFWwindow object that we can use for GLFW's functions TAMAÑO DE VENTANA DE ACUERDO A PANTALLA
+	//// Create a GLFWwindow object that we can use for GLFW's functions TAMAÑO DE VENTANA DE ACUERDO A PANTALLA
+	//GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	//const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+	//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Escenario Super Mario Bros -Paul Ramos", primaryMonitor, nullptr);
+
 	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
-	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Pruebas Finales", primaryMonitor, nullptr);
-
-	/*GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
-	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
-	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height - 60, "Pruebas Finales", nullptr, nullptr);*/
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height - 60, "Escenario Super Mario Bros -Paul Ramos", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
